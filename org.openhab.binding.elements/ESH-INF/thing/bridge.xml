@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="elements"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 org.eclipse.smarthome.thing-description.xsd">
+
+	<bridge-type id="base">
+		<label>Gigaset Elements Base</label>
+		<description>This bridge represents the Gigaset Elements Base
+		</description>
+		<channels>
+            <channel id="mode" typeId="mode" />
+        </channels>
+	    <config-description>
+      <parameter name="password" type="text" required="false">
+                <context>password</context>
+                <label>Password</label>
+                <description>Password to access the FRITZ!Box device.
+                </description>
+            </parameter>
+            <parameter name="user" type="text" required="false">
+                <label>Username</label>
+                <description>User name which has HomeAuto permissions on the given FRITZ!Box.
+                </description>
+            </parameter>
+    </config-description>
+
+	</bridge-type>
+	<channel-type id="mode">
+        <item-type>String</item-type>
+        <label>Mode</label>
+        <description>Gigaset Elements Mode Setting</description>
+        <tags>
+            <tag>alarm</tag>
+        </tags>
+        <state readOnly="false">
+            <options>
+                <option value="HOME">Home</option>
+                <option value="AWAY">Away</option>
+                <option value="CUSTOM">Custom</option>
+            </options>
+        </state>
+    </channel-type>
+	
+</thing:thing-descriptions>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="elements"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+	<!-- Sample Thing Type -->
+
+	<thing-type id="window">
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="base" />
+		</supported-bridge-type-refs>
+
+		<label>Window sensor</label>
+		<description>Elements Window sensor</description>
+
+		<channels>
+			<channel id="open" typeId="open" />
+		</channels>
+	</thing-type>
+	
+    <thing-type id="door">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="base" />
+        </supported-bridge-type-refs>
+
+        <label>Door Sensor</label>
+        <description>Elements door sensor</description>
+
+        <channels>
+            <channel id="open" typeId="open" />
+        </channels>
+    </thing-type>
+
+    <thing-type id="motion">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="base" />
+        </supported-bridge-type-refs>
+
+        <label>Motion sensor</label>
+        <description>Elements motion sensor</description>
+
+    </thing-type>
+
+    <thing-type id="siren">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="base" />
+        </supported-bridge-type-refs>
+
+        <label>Siren</label>
+        <description>Elements siren</description>
+
+    </thing-type>    
+
+    <thing-type id="plug">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="base" />
+        </supported-bridge-type-refs>
+
+        <label>Plug</label>
+        <description>Elements Plug</description>
+
+    </thing-type>    
+
+	
+
+	<!-- Sample Channel Type -->
+	<channel-type id="open">
+		<item-type>switch</item-type>
+		<label>Window Open</label>
+		<description>Sample channel for Elements Binding window open</description>
+	</channel-type>
+
+</thing:thing-descriptions>
