@@ -22,7 +22,7 @@ public class GigasetElementsJersey extends GigasetElementsBase {
     }
 
     @Override
-    protected Client newClient() {
+    public Client newClient() {
         ClientConfig config = new ClientConfig();
         config.property(ClientProperties.FOLLOW_REDIRECTS, true);
         Client client = ClientBuilder.newClient(config);

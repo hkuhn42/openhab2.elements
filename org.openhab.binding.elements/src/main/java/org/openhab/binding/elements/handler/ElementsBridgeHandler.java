@@ -9,77 +9,86 @@
  */
 package org.openhab.binding.elements.handler;
 
-import java.util.Set;
+import java.util.Collection;
 
+import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
+import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.openhab.binding.elements.ElementsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cc.gigaset.common.Base;
 import com.cc.gigaset.common.Mode;
+import com.cc.gigaset.common.Sensor;
 import com.cc.gigaset.jersey.GigasetElementsJersey;
 
 /**
- * The {@link ElementsHandler} is responsible for handling commands, which are
+ * The {@link ElementsBridgeHandler} is responsible for handling commands, which are
  * sent to one of the channels.
  *
  *
  *
  * @author Harald Kuhn - Initial contribution
  */
-public class ElementsHandler extends BaseThingHandler {
+public class ElementsBridgeHandler extends BaseThingHandler {
 
     GigasetElementsJersey gej;
+    private ElementsDiscoveryService service;
 
-    private Logger logger = LoggerFactory.getLogger(ElementsHandler.class);
+    private Logger logger = LoggerFactory.getLogger(ElementsBridgeHandler.class);
 
-    public ElementsHandler(Thing thing) {
+    private Base base;
+
+    public ElementsBridgeHandler(Thing thing, ElementsDiscoveryService service) {
         super(thing);
-        logger.debug("new elements handler for:" + thing.getThingTypeUID().getAsString());
-        if ("elements:base".equalsIgnoreCase(thing.getThingTypeUID().getAsString())) {
-            Set<String> keys = thing.getConfiguration().getProperties().keySet();
-            // logger.debug("param dumb for " + thing.getThingTypeUID().getAsString());
-            // for (String string : keys) {
-            // logger.debug(string);
-            // }
-            // logger.debug("xxxxxxxxxxxxxxxxxxx" + thing.getBridgeUID());
+        this.service = service;
+    }
 
-            ElementsConfiguration config = this.getConfigAs(ElementsConfiguration.class);
+    private void initBase() {
+        Thing bridge = getBridge();
+        if (bridge == null) {
+            bridge = getThing();
+        }
+        if (bridge != null) {
+            ElementsConfiguration config = bridge.getConfiguration().as(ElementsConfiguration.class);
             logger.info("connection to cloud wither user " + config.getUser());
 
             if (gej == null) {
                 try {
                     gej = new GigasetElementsJersey(config.getUser(), config.getPassword());
-                    // Base base = gej.getBase();
-                    // Collection<Sensor> sensors = base.getSensors();
-                    // for (Sensor sensor : sensors) {
-                    // System.out.println(sensor.getName() + " " + sensor.getType() + " " + sensor.getStatus() + " "
-                    // + sensor.getAttributes());
-                    // }
+                    base = gej.getBase();
 
-                    // thing.setProperty(name, value)
-                    String mode = gej.getBase().getMode().toString();
-                    // updateState(new ChannelUID(getThing().getUID(), "mode"), new StringType(mode));
                 } catch (Exception e) {
                     gej = null;
                     e.printStackTrace();
                 }
             }
         }
-
     }
 
     @Override
     public void initialize() {
         super.initialize();
+        try {
+            Base base = getBase();
+            String mode = base.getMode().toString();
+            updateState(new ChannelUID(getThing().getUID(), "mode"), new StringType(mode));
+            updateStatus(ThingStatus.ONLINE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            updateStatus(ThingStatus.OFFLINE);
+        }
+
     }
 
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
+
         if (channelUID.getId().equals("mode")) {
             if (command instanceof StringType) {
                 Mode mode = null;
@@ -110,10 +119,39 @@ public class ElementsHandler extends BaseThingHandler {
             }
 
         }
-
+        if (channelUID.getId().equals("discover")) {
+            service.scan();
+            updateState(new ChannelUID(getThing().getUID(), "discover"), OnOffType.OFF);
+        }
         // Sensor
-
-        logger.debug("gigaset " + channelUID + " " + command);
+        logger.debug("########### gigaset channel " + channelUID + " gets command " + command + " ##############");
     }
 
+    public Base getBase() {
+        if (base == null) {
+            initBase();
+        }
+        return base;
+    }
+
+    public void setBase(Base base) {
+        this.base = base;
+    }
+
+    public Collection<Sensor> getSensors() {
+        return getBase().getSensors();
+    }
+
+    public Sensor getSensor(String id) {
+        Collection<Sensor> sensors = getSensors();
+        if (sensors == null) {
+            return null;
+        }
+        for (Sensor sensor : sensors) {
+            if (id != null && id.equalsIgnoreCase(sensor.getId())) {
+                return sensor;
+            }
+        }
+        return null;
+    }
 }

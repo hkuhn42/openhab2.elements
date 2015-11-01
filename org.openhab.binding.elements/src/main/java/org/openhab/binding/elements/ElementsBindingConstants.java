@@ -31,8 +31,12 @@ public class ElementsBindingConstants {
 
     public final static ThingTypeUID THING_TYPE_MOTION = new ThingTypeUID(BINDING_ID, "motion");
 
-    public final static ThingTypeUID THING_TYPE_PLUG = new ThingTypeUID(BINDING_ID, "plug");
+    // public final static ThingTypeUID THING_TYPE_PLUG = new ThingTypeUID(BINDING_ID, "plug");
 
+    // public final static ThingTypeUID THING_TYPE_PLUG = new ThingTypeUID(BINDING_ID, "button");
+
+    // public final static ThingTypeUID THING_TYPE_CAMERA = new ThingTypeUID(BINDING_ID, "camera");
+    
     // List of all Channel ids
     public final static String CHANNEL_1 = "channel1";
 

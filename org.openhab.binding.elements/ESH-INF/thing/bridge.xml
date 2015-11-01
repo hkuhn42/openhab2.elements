@@ -10,6 +10,7 @@
 		</description>
 		<channels>
             <channel id="mode" typeId="mode" />
+            <channel id="discover" typeId="discover" />
         </channels>
 	    <config-description>
       <parameter name="password" type="text" required="false">
@@ -39,6 +40,14 @@
                 <option value="AWAY">Away</option>
                 <option value="CUSTOM">Custom</option>
             </options>
+        </state>
+    </channel-type>
+    
+    <channel-type id="discover">
+        <item-type>Switch</item-type>
+        <label>Scan</label>
+        <description>Gigaset Elements Scan</description>
+        <state readOnly="false">
         </state>
     </channel-type>
 	

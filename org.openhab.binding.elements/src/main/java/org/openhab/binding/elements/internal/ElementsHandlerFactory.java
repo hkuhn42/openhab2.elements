@@ -18,8 +18,9 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
 import org.openhab.binding.elements.ElementsBindingConstants;
+import org.openhab.binding.elements.handler.ElementsBridgeHandler;
 import org.openhab.binding.elements.handler.ElementsDiscoveryService;
-import org.openhab.binding.elements.handler.ElementsHandler;
+import org.openhab.binding.elements.handler.ElementsThingHandler;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,33 +33,43 @@ import org.slf4j.LoggerFactory;
  */
 public class ElementsHandlerFactory extends BaseThingHandlerFactory {
 
+    /**
+     * Logger
+     */
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = new HashSet<ThingTypeUID>();
 
     private ServiceRegistration<?> discoveryServiceReg;
 
     static {
         SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_BASE);
+        SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_DOOR);
+        SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_WINDOW);
+        SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_BASE);
+        SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_SIREN);
     }
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
-        // return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
-        return true;
+        return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
     }
 
     @Override
     protected ThingHandler createHandler(Thing thing) {
-        if (false && ElementsBindingConstants.THING_TYPE_BASE.equals(thing.getThingTypeUID())) {
-            // AvmDiscoveryService discoveryService = new AvmDiscoveryService(handler);
-            // this.discoveryServiceRegs.put(handler.getThing().getUID(), bundleContext.registerService(
-            // DiscoveryService.class.getName(), discoveryService, new Hashtable<String, Object>()));
-
-            ElementsDiscoveryService discoveryService = new ElementsDiscoveryService((Bridge) thing, 15);
-            // discoveryService.activate(null);
+        logger.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        logger.info("new handler for " + thing);
+        logger.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        ElementsDiscoveryService discoveryService = null;
+        if (ElementsBindingConstants.THING_TYPE_BASE.equals(thing.getThingTypeUID())) {
+            logger.debug("discovery service register");
+            discoveryService = new ElementsDiscoveryService((Bridge) thing, 15);
             this.discoveryServiceReg = bundleContext.registerService(DiscoveryService.class.getName(), discoveryService,
                     new Hashtable<String, Object>());
+            logger.debug("done ElementsDiscoveryService");
+            return new ElementsBridgeHandler(thing, discoveryService);
         }
-        return new ElementsHandler(thing);
+        return new ElementsThingHandler(thing);
     }
 
     @Override
@@ -75,26 +86,11 @@ public class ElementsHandlerFactory extends BaseThingHandlerFactory {
         super.removeHandler(thingHandler);
     }
 
-    /**
-     * Logger
-     */
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    /**
-     * Service registration map
-     */
-    // private Map<ThingUID, ServiceRegistration<?>> discoveryServiceRegs = new HashMap<>();
-    //
-    // /**
-    // * Remove handler of things.
-    // */
     // @Override
-    // protected synchronized void removeHandler(ThingHandler thingHandler) {
-    //
-    // ServiceRegistration<?> serviceReg = this.discoveryServiceRegs.get(thingHandler.getThing().getUID());
-    // if (serviceReg != null) {
-    // serviceReg.unregister();
-    // discoveryServiceRegs.remove(thingHandler.getThing().getUID());
-    // }
+    // public Thing createThing(ThingTypeUID thingTypeUID, Configuration configuration, ThingUID thingUID,
+    // ThingUID bridgeUID) {
+    // // TODO Auto-generated method stub
+    // return super.createThing(thingTypeUID, configuration, thingUID, bridgeUID);
     // }
 
 }
