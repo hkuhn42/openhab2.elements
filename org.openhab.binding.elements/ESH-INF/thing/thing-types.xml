@@ -13,7 +13,7 @@
 		<label>Window sensor</label>
 		<description>Elements Window sensor</description>
 		<channels>
-			<channel id="open" typeId="position_status" />
+			<channel id="position" typeId="position_status" />
 			<channel id="battery" typeId="battery" />
 			<channel id="firmware" typeId="firmware" />
 		</channels>
@@ -29,7 +29,7 @@
 
         <channels>
             <channel id="firmware" typeId="firmware" />
-            <channel id="open" typeId="position_status" />
+            <channel id="position" typeId="position_status" />
             <channel id="battery" typeId="battery" />
         </channels>
     </thing-type>

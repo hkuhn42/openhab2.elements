@@ -63,11 +63,14 @@ public class ElementsHandlerFactory extends BaseThingHandlerFactory {
         ElementsDiscoveryService discoveryService = null;
         if (ElementsBindingConstants.THING_TYPE_BASE.equals(thing.getThingTypeUID())) {
             logger.debug("discovery service register");
+
+            ElementsBridgeHandler bridgetHandler = new ElementsBridgeHandler(thing, discoveryService);
+
             discoveryService = new ElementsDiscoveryService((Bridge) thing, 15);
             this.discoveryServiceReg = bundleContext.registerService(DiscoveryService.class.getName(), discoveryService,
                     new Hashtable<String, Object>());
             logger.debug("done ElementsDiscoveryService");
-            return new ElementsBridgeHandler(thing, discoveryService);
+            return bridgetHandler;
         }
         return new ElementsThingHandler(thing);
     }

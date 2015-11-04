@@ -43,10 +43,19 @@ public class ElementsThingHandler extends BaseThingHandler {
     @Override
     public void initialize() {
         super.initialize();
+        refreshStatus();
+    }
 
+    protected void refreshStatus() {
         Sensor thisSensor = getThisSensor();
         if (thisSensor != null) {
-            updateStatus(ThingStatus.ONLINE);
+
+            if (ElementsBindingConstants.THING_TYPE_DOOR.equals(thing.getThingTypeUID())
+                    || ElementsBindingConstants.THING_TYPE_WINDOW.equals(thing.getThingTypeUID())) {
+                String positionStatus = String.valueOf(thisSensor.getAttributes().get("position_status"));
+                logger.info("position status is " + positionStatus);
+                updateState(new ChannelUID(getThing().getUID(), "position"), new StringType(positionStatus));
+            }
             if (ElementsBindingConstants.THING_TYPE_DOOR.equals(thing.getThingTypeUID())
                     || ElementsBindingConstants.THING_TYPE_WINDOW.equals(thing.getThingTypeUID())
                     || ElementsBindingConstants.THING_TYPE_MOTION.equals(thing.getThingTypeUID())) {
@@ -55,8 +64,14 @@ public class ElementsThingHandler extends BaseThingHandler {
             }
             Map<String, Object> attrs = thisSensor.getAttributes();
             String firmwareStatus = attrs.get("firmware_status").toString();
+            updateState(new ChannelUID(getThing().getUID(), "firmware"), new StringType(firmwareStatus));
+
             String state = thisSensor.getStatus();
-            updateState(new ChannelUID(getThing().getUID(), "firmwareStatus"), new StringType(firmwareStatus));
+            if ("online".equalsIgnoreCase(state)) {
+                updateStatus(ThingStatus.ONLINE);
+            } else {
+                updateStatus(ThingStatus.OFFLINE);
+            }
         } else {
             updateStatus(ThingStatus.OFFLINE);
         }

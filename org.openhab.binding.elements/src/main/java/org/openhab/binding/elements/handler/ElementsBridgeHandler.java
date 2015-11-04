@@ -10,9 +10,13 @@
 package org.openhab.binding.elements.handler;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.StringType;
+import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
@@ -23,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cc.gigaset.common.Base;
+import com.cc.gigaset.common.Event;
 import com.cc.gigaset.common.Mode;
 import com.cc.gigaset.common.Sensor;
 import com.cc.gigaset.jersey.GigasetElementsJersey;
@@ -37,12 +42,14 @@ import com.cc.gigaset.jersey.GigasetElementsJersey;
  */
 public class ElementsBridgeHandler extends BaseThingHandler {
 
-    GigasetElementsJersey gej;
+    private GigasetElementsJersey gej;
     private ElementsDiscoveryService service;
 
     private Logger logger = LoggerFactory.getLogger(ElementsBridgeHandler.class);
 
     private Base base;
+
+    private ScheduledFuture<?> pollingJob;
 
     public ElementsBridgeHandler(Thing thing, ElementsDiscoveryService service) {
         super(thing);
@@ -84,6 +91,40 @@ public class ElementsBridgeHandler extends BaseThingHandler {
             updateStatus(ThingStatus.OFFLINE);
         }
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ElementsConfiguration config = getThing().getConfiguration().as(ElementsConfiguration.class);
+                    gej = new GigasetElementsJersey(config.getUser(), config.getPassword());
+                    base = gej.getBase();
+
+                    String mode = base.getMode().toString();
+                    updateState(new ChannelUID(getThing().getUID(), "mode"), new StringType(mode));
+
+                    List<Thing> things = ((Bridge) getThing()).getThings();
+                    for (Thing thing : things) {
+                        ((ElementsThingHandler) thing.getHandler()).refreshStatus();
+                    }
+
+                    Collection<Event> events = base.getEvents();
+                    for (Event event : events) {
+                        logger.debug("elements event registered " + event.getType());
+                        // endnode_fw_update_success
+                        // movement
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        pollingJob = scheduler.scheduleAtFixedRate(runnable, 0, 30, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void dispose() {
+        pollingJob.cancel(true);
     }
 
     @Override
