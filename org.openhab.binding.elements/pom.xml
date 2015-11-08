@@ -21,4 +21,5 @@
   <name>Elements Binding</name>
   <packaging>eclipse-plugin</packaging>
 
+  <dependencies></dependencies>
 </project>
