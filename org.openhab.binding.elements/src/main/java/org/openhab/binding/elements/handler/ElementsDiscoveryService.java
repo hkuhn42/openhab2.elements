@@ -55,6 +55,7 @@ public class ElementsDiscoveryService extends AbstractDiscoveryService {
         SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_WINDOW);
         SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_BASE);
         SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_SIREN);
+        SUPPORTED_THING_TYPES_UIDS.add(ElementsBindingConstants.THING_TYPE_MOTION);
     }
 
     /*
