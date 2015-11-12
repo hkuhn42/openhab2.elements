@@ -45,6 +45,7 @@
         <channels>
             <channel id="firmware" typeId="firmware" />
             <channel id="battery" typeId="battery" />
+            <channel id="motion" typeId="motion"/>
         </channels>
     </thing-type>
 
@@ -140,5 +141,13 @@
 	       </options>     
         </state>
     </channel-type>
+    
+    <channel-type id="motion">
+        <item-type>String</item-type>
+        <label>Motion</label>
+        <description>Motion status of sensor</description>
+        <category>Motion</category>
+    </channel-type>
+    
 
 </thing:thing-descriptions>

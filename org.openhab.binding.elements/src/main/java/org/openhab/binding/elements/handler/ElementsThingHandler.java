@@ -9,8 +9,6 @@
  */
 package org.openhab.binding.elements.handler;
 
-import java.util.Map;
-
 import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
@@ -18,10 +16,9 @@ import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.openhab.binding.elements.ElementsBindingConstants;
+import org.openhab.elements.api.cloud.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.cc.gigaset.common.Sensor;
 
 /**
  * The {@link ElementsThingHandler} is responsible for handling commands, which are
@@ -48,30 +45,30 @@ public class ElementsThingHandler extends BaseThingHandler {
 
     protected void refreshStatus() {
         Sensor thisSensor = getThisSensor();
-        if (thisSensor != null) {
+        if (thisSensor == null) {
+            updateStatus(ThingStatus.OFFLINE);
+            return;
+        }
 
-            if (ElementsBindingConstants.THING_TYPE_DOOR.equals(thing.getThingTypeUID())
-                    || ElementsBindingConstants.THING_TYPE_WINDOW.equals(thing.getThingTypeUID())) {
-                String positionStatus = String.valueOf(thisSensor.getAttributes().get("position_status"));
-                logger.info("position status is " + positionStatus);
-                updateState(new ChannelUID(getThing().getUID(), "position"), new StringType(positionStatus));
-            }
-            if (ElementsBindingConstants.THING_TYPE_DOOR.equals(thing.getThingTypeUID())
-                    || ElementsBindingConstants.THING_TYPE_WINDOW.equals(thing.getThingTypeUID())
-                    || ElementsBindingConstants.THING_TYPE_MOTION.equals(thing.getThingTypeUID())) {
-                logger.info("battery status is " + thisSensor.getBattery());
-                updateState(new ChannelUID(getThing().getUID(), "battery"), new StringType(thisSensor.getBattery()));
-            }
-            Map<String, Object> attrs = thisSensor.getAttributes();
-            String firmwareStatus = attrs.get("firmware_status").toString();
-            updateState(new ChannelUID(getThing().getUID(), "firmware"), new StringType(firmwareStatus));
+        if (ElementsBindingConstants.THING_TYPE_DOOR.equals(thing.getThingTypeUID())
+                || ElementsBindingConstants.THING_TYPE_WINDOW.equals(thing.getThingTypeUID())) {
+            String positionStatus = String.valueOf(thisSensor.getPositionStatus());
+            logger.info("position status is " + positionStatus);
+            updateState(new ChannelUID(getThing().getUID(), "position"), new StringType(positionStatus));
+        }
+        if (ElementsBindingConstants.THING_TYPE_DOOR.equals(thing.getThingTypeUID())
+                || ElementsBindingConstants.THING_TYPE_WINDOW.equals(thing.getThingTypeUID())
+                || ElementsBindingConstants.THING_TYPE_MOTION.equals(thing.getThingTypeUID())) {
+            logger.info("battery status is " + thisSensor.getBattery());
+            updateState(new ChannelUID(getThing().getUID(), "battery"),
+                    new StringType(thisSensor.getBattery().getState()));
+        }
+        String firmwareStatus = thisSensor.getFirmwareStatus();
+        updateState(new ChannelUID(getThing().getUID(), "firmware"), new StringType(firmwareStatus));
 
-            String state = thisSensor.getStatus();
-            if ("online".equalsIgnoreCase(state)) {
-                updateStatus(ThingStatus.ONLINE);
-            } else {
-                updateStatus(ThingStatus.OFFLINE);
-            }
+        String state = thisSensor.getStatus();
+        if ("online".equalsIgnoreCase(state)) {
+            updateStatus(ThingStatus.ONLINE);
         } else {
             updateStatus(ThingStatus.OFFLINE);
         }

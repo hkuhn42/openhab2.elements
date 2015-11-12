@@ -22,10 +22,10 @@ import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.ThingUID;
 import org.openhab.binding.elements.ElementsBindingConstants;
+import org.openhab.binding.elements.internal.ElementsHandlerFactory;
+import org.openhab.elements.api.cloud.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.cc.gigaset.common.Sensor;
 
 /**
  * Discovery Service for Gigaset Elements Sensors and Devices
@@ -65,44 +65,27 @@ public class ElementsDiscoveryService extends AbstractDiscoveryService {
      */
     @Override
     protected void startScan() {
-
-        logger.debug("ElementsDiscoveryService start -----------------------------------");
         ElementsBridgeHandler handler = (ElementsBridgeHandler) cloud.getHandler();
-
         try {
-            Collection<Sensor> sensors = handler.getSensors();
+            Collection<org.openhab.elements.api.cloud.Sensor> sensors = handler.getSensors();
+            logger.debug("ElementsDiscoveryService found:" + sensors.size());
             for (Sensor sensor : sensors) {
                 Map<String, Object> properties = new HashMap<String, Object>();
 
-                ThingTypeUID thingTypeUID = null;
-                switch (sensor.getType()) {
-                    case DOOR:
-                        thingTypeUID = ElementsBindingConstants.THING_TYPE_DOOR;
-                        break;
-                    case WINDOW:
-                        thingTypeUID = ElementsBindingConstants.THING_TYPE_WINDOW;
-                        break;
-                    case MOTION:
-                        thingTypeUID = ElementsBindingConstants.THING_TYPE_MOTION;
-                        break;
-                    case SIREN:
-                        thingTypeUID = ElementsBindingConstants.THING_TYPE_SIREN;
-                        break;
-                    default:
-                        thingTypeUID = null;
-                        break;
-
-                }
+                ThingTypeUID thingTypeUID = ElementsHandlerFactory.getSensorType(sensor);
 
                 if (thingTypeUID != null) {
                     ThingUID thingUID = new ThingUID(thingTypeUID, sensor.getId());
 
                     DiscoveryResult discoveryResult = DiscoveryResultBuilder.create(thingUID).withProperties(properties)
                             .withRepresentationProperty(sensor.getId()).withBridge(cloud.getUID())
-                            .withLabel(sensor.getName()).build();
+                            .withLabel(sensor.getFriendlyName()).build();
 
                     thingDiscovered(discoveryResult);
+                } else {
+                    logger.warn("ElementsDiscoveryService found unknown sensor: " + sensor.getType());
                 }
+
             }
         } catch (Exception e) {
             logger.error("discovery failed", e);

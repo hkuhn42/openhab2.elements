@@ -3,8 +3,6 @@
  */
 package org.openhab.elements;
 
-import java.util.Collection;
-
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -14,43 +12,49 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
-import org.glassfish.jersey.filter.LoggingFilter;
-import org.openhab.binding.elements.api.cloud.Base;
-import org.openhab.binding.elements.api.cloud.IElementsClient;
-import org.openhab.binding.elements.api.identity.IElementsIdentity;
-import org.openhab.binding.elements.api.identity.IdentitiyResult;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.openhab.elements.api.cloud.Base;
+import org.openhab.elements.api.cloud.BaseConfig;
+import org.openhab.elements.api.cloud.EventResult;
+import org.openhab.elements.api.cloud.IElementsClient;
+import org.openhab.elements.api.cloud.IntrusionSettings;
+import org.openhab.elements.api.identity.IElementsIdentity;
+import org.openhab.elements.api.identity.IdentitiyResult;
 
 /**
- * @author hkuhn
+ * Cloud Client wrapper
  *
+ * @author hkuhn
  */
 public class ElementsClient2 {
 
+    private Client client;
+
+    public ElementsClient2() {
+        ClientConfig conf = new ClientConfig();
+        client = ClientBuilder.newClient(conf);
+        client.register(JacksonFeature.class);
+    }
+
+    public Client getServiceClient() {
+        return client;
+    }
+
     /**
-     * @param args
+     * PUBLIC API
+     *
+     * @param email
+     * @param passwd
+     * @return
+     * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
-        ElementsClient2 client = new ElementsClient2();
-
-        try {
-            String usertoken = "_5iDhdFYTsKGFah9wyoMCg__TIMESTAMP__1447002476:1ZvMtA:UpVfp3mLOUnYzrLrSXFJW1FLiaQ";
-            client.getBase(usertoken);
-        } catch (NotAuthorizedException e) {
-            IdentitiyResult identifity = client.getIdString("harald.kuhn@gmail.com", "xaZmZP@hJ59DD");
-            System.out.println("reefssid:" + identifity.getReefssid());
-
-            String usertoken = client.getUserToken(identifity.getReefssid());
-            System.out.println("usertoken:" + usertoken);
-
-            client.getBase(usertoken);
-        }
-
+    public String getUserToken(String email, String passwd) throws Exception {
+        IdentitiyResult identifity = getIdString(email, passwd);
+        return getUserToken(identifity.getReefssid());
     }
 
     public IdentitiyResult getIdString(String email, String passwd) throws Exception {
-        ClientConfig conf = new ClientConfig();
-        Client client = ClientBuilder.newClient(conf);
-        client.register(LoggingFilter.class);
+
         WebTarget target = client.target(IElementsIdentity.CLOUD_URL);
 
         IElementsIdentity elementsCloud = WebResourceFactory.newResource(IElementsIdentity.class, target);
@@ -59,33 +63,46 @@ public class ElementsClient2 {
     }
 
     public String getUserToken(String reefssid) throws Exception {
-        ClientConfig conf = new ClientConfig();
-        Client client = ClientBuilder.newClient(conf);
-        client.register(LoggingFilter.class);
-
-        // client.register(LoggingFilter.class);
-
-        WebTarget t = client.target(IElementsClient.CLOUD_URL);
+        WebTarget target = client.target(IElementsClient.CLOUD_URL);
 
         // create a new client proxy for the BooksResource
-        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, t);
+        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
 
         Response response = elementsCloud.connect("gigaset", reefssid);
         Cookie usercookie = response.getCookies().get("usertoken");
         return usercookie.getValue();
     }
 
-    public void getBase(String usertoken) throws NotAuthorizedException {
-        ClientConfig conf = new ClientConfig();
-        Client client = ClientBuilder.newClient(conf);
-        client.register(LoggingFilter.class);
-        // client.register(JSON2PojoFeature.class);
+    /**
+     * public api
+     *
+     * @param usertoken
+     * @return
+     * @throws NotAuthorizedException
+     */
+    public Base[] getBase(String usertoken) throws NotAuthorizedException {
+        WebTarget target = client.target(IElementsClient.CLOUD_URL);
+        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
 
-        WebTarget t = client.target(IElementsClient.CLOUD_URL);
-        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, t);
-
-        Collection<Base> baseData = elementsCloud.getBase(usertoken);
-        System.out.println(baseData.size());
+        return elementsCloud.getBase(usertoken);
     }
 
+    public void setMode(String baseId, String mode, String usertoken) {
+        WebTarget target = client.target(IElementsClient.CLOUD_URL);
+        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
+        IntrusionSettings settings = new IntrusionSettings();
+        settings.setActiveMode(mode.toLowerCase());
+
+        BaseConfig config = new BaseConfig();
+        config.setIntrusionSettings(settings);
+
+        elementsCloud.setIntrusionSettings(baseId, usertoken, config);
+    }
+
+    public EventResult getEvents(String usertoken) {
+        WebTarget target = client.target(IElementsClient.CLOUD_URL);
+        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
+
+        return elementsCloud.getEvents(5, usertoken);
+    }
 }

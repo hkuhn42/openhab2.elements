@@ -21,9 +21,12 @@ import org.openhab.binding.elements.ElementsBindingConstants;
 import org.openhab.binding.elements.handler.ElementsBridgeHandler;
 import org.openhab.binding.elements.handler.ElementsDiscoveryService;
 import org.openhab.binding.elements.handler.ElementsThingHandler;
+import org.openhab.elements.api.cloud.Sensor;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.cc.gigaset.common.SensorType;
 
 /**
  * The {@link ElementsHandlerFactory} is responsible for creating things and thing
@@ -57,9 +60,6 @@ public class ElementsHandlerFactory extends BaseThingHandlerFactory {
 
     @Override
     protected ThingHandler createHandler(Thing thing) {
-        logger.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        logger.info("new handler for " + thing);
-        logger.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         ElementsDiscoveryService discoveryService = null;
         if (ElementsBindingConstants.THING_TYPE_BASE.equals(thing.getThingTypeUID())) {
             logger.debug("discovery service register");
@@ -79,9 +79,6 @@ public class ElementsHandlerFactory extends BaseThingHandlerFactory {
     protected void removeHandler(ThingHandler thingHandler) {
         if (ElementsBindingConstants.THING_TYPE_BASE.equals(thingHandler.getThing().getThingTypeUID())) {
             if (this.discoveryServiceReg != null) {
-                // MaxDeviceDiscoveryService service = (MaxDeviceDiscoveryService)
-                // bundleContext.getService(discoveryServiceReg.getReference());
-                // service.deactivate();
                 discoveryServiceReg.unregister();
                 discoveryServiceReg = null;
             }
@@ -89,11 +86,27 @@ public class ElementsHandlerFactory extends BaseThingHandlerFactory {
         super.removeHandler(thingHandler);
     }
 
-    // @Override
-    // public Thing createThing(ThingTypeUID thingTypeUID, Configuration configuration, ThingUID thingUID,
-    // ThingUID bridgeUID) {
-    // // TODO Auto-generated method stub
-    // return super.createThing(thingTypeUID, configuration, thingUID, bridgeUID);
-    // }
+    public static ThingTypeUID getSensorType(Sensor sensor) {
+        ThingTypeUID thingTypeUID = null;
+        SensorType type = SensorType.valueOf(sensor.getType());
+        switch (type) {
+            case DOOR:
+                thingTypeUID = ElementsBindingConstants.THING_TYPE_DOOR;
+                break;
+            case WINDOW:
+                thingTypeUID = ElementsBindingConstants.THING_TYPE_WINDOW;
+                break;
+            case MOTION:
+                thingTypeUID = ElementsBindingConstants.THING_TYPE_MOTION;
+                break;
+            case SIREN:
+                thingTypeUID = ElementsBindingConstants.THING_TYPE_SIREN;
+                break;
+            default:
+                thingTypeUID = null;
+                break;
 
+        }
+        return thingTypeUID;
+    }
 }
