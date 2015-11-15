@@ -1,9 +1,18 @@
-
+/**
+ * Copyright (c) 2015 Harald Kuhn
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.openhab.elements.api.cloud;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,10 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({
-    "tilt",
-    "open"
-})
+@JsonPropertyOrder({ "tilt", "open" })
 public class Behaviors {
 
     @JsonProperty("tilt")
@@ -27,9 +33,9 @@ public class Behaviors {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-     *     The tilt
+     *         The tilt
      */
     @JsonProperty("tilt")
     public String getTilt() {
@@ -37,9 +43,9 @@ public class Behaviors {
     }
 
     /**
-     * 
+     *
      * @param tilt
-     *     The tilt
+     *            The tilt
      */
     @JsonProperty("tilt")
     public void setTilt(String tilt) {
@@ -47,9 +53,9 @@ public class Behaviors {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The open
+     *         The open
      */
     @JsonProperty("open")
     public String getOpen() {
@@ -57,9 +63,9 @@ public class Behaviors {
     }
 
     /**
-     * 
+     *
      * @param open
-     *     The open
+     *            The open
      */
     @JsonProperty("open")
     public void setOpen(String open) {

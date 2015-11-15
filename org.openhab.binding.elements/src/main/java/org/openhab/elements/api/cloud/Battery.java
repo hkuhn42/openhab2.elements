@@ -1,9 +1,18 @@
-
+/**
+ * Copyright (c) 2015 Harald Kuhn
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.openhab.elements.api.cloud;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,9 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({
-    "state"
-})
+@JsonPropertyOrder({ "state" })
 public class Battery {
 
     @JsonProperty("state")
@@ -24,9 +31,9 @@ public class Battery {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-     *     The state
+     *         The state
      */
     @JsonProperty("state")
     public String getState() {
@@ -34,9 +41,9 @@ public class Battery {
     }
 
     /**
-     * 
+     *
      * @param state
-     *     The state
+     *            The state
      */
     @JsonProperty("state")
     public void setState(String state) {

@@ -21,12 +21,11 @@ import org.openhab.binding.elements.ElementsBindingConstants;
 import org.openhab.binding.elements.handler.ElementsBridgeHandler;
 import org.openhab.binding.elements.handler.ElementsDiscoveryService;
 import org.openhab.binding.elements.handler.ElementsThingHandler;
+import org.openhab.elements.SensorType;
 import org.openhab.elements.api.cloud.Sensor;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.cc.gigaset.common.SensorType;
 
 /**
  * The {@link ElementsHandlerFactory} is responsible for creating things and thing

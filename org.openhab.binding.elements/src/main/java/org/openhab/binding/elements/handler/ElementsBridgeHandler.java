@@ -22,10 +22,13 @@ import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
+import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.openhab.binding.elements.ElementsBindingConstants;
 import org.openhab.binding.elements.ElementsConfiguration;
-import org.openhab.elements.ElementsClient2;
+import org.openhab.elements.ElementsClient;
+import org.openhab.elements.EventType;
 import org.openhab.elements.api.cloud.Base;
 import org.openhab.elements.api.cloud.Event;
 import org.openhab.elements.api.cloud.EventResult;
@@ -43,7 +46,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ElementsBridgeHandler extends BaseThingHandler {
 
-    private ElementsClient2 client;
+    private ElementsClient client;
     private ElementsDiscoveryService service;
     private String usertoken;
 
@@ -67,7 +70,7 @@ public class ElementsBridgeHandler extends BaseThingHandler {
 
             if (client == null) {
                 try {
-                    client = new ElementsClient2();
+                    client = new ElementsClient();
 
                     try {
                         if (usertoken == null) {
@@ -129,7 +132,28 @@ public class ElementsBridgeHandler extends BaseThingHandler {
                         try {
                             EventResult eventResult = client.getEvents(usertoken);
                             for (Event event : eventResult.getEvents()) {
-                                event.getType();
+                                EventType type = EventType.fromString(event.getType());
+
+                                String channel = null;
+                                switch (type) {
+                                    case OPEN:
+                                    case CLOSE:
+                                        channel = ElementsBindingConstants.CHANNEL_TYPE_POSITION_STATUS;
+                                        break;
+                                    case MOVEMENT:
+                                        channel = "motion";
+                                        break;
+                                    case HOMECOMING:
+                                        break;
+                                    default:
+                                        logger.warn("unknown event type " + event.getType() + " " + event);
+                                        break;
+                                }
+                                if (channel != null) {
+                                    ThingUID sensor = new ThingUID(ElementsBindingConstants.THING_TYPE_DOOR,
+                                            event.getO().getId());
+                                    updateState(new ChannelUID(sensor, channel), new StringType(event.getType()));
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

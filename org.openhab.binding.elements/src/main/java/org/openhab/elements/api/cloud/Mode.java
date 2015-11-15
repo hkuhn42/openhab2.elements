@@ -1,9 +1,18 @@
-
+/**
+ * Copyright (c) 2015 Harald Kuhn
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.openhab.elements.api.cloud;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,11 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({
-    "home",
-    "away",
-    "custom"
-})
+@JsonPropertyOrder({ "home", "away", "custom" })
 public class Mode {
 
     @JsonProperty("home")
@@ -30,9 +35,9 @@ public class Mode {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-     *     The home
+     *         The home
      */
     @JsonProperty("home")
     public Home getHome() {
@@ -40,9 +45,9 @@ public class Mode {
     }
 
     /**
-     * 
+     *
      * @param home
-     *     The home
+     *            The home
      */
     @JsonProperty("home")
     public void setHome(Home home) {
@@ -50,9 +55,9 @@ public class Mode {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The away
+     *         The away
      */
     @JsonProperty("away")
     public Away getAway() {
@@ -60,9 +65,9 @@ public class Mode {
     }
 
     /**
-     * 
+     *
      * @param away
-     *     The away
+     *            The away
      */
     @JsonProperty("away")
     public void setAway(Away away) {
@@ -70,9 +75,9 @@ public class Mode {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The custom
+     *         The custom
      */
     @JsonProperty("custom")
     public Custom getCustom() {
@@ -80,9 +85,9 @@ public class Mode {
     }
 
     /**
-     * 
+     *
      * @param custom
-     *     The custom
+     *            The custom
      */
     @JsonProperty("custom")
     public void setCustom(Custom custom) {

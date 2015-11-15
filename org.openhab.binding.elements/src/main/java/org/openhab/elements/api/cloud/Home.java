@@ -1,9 +1,18 @@
-
+/**
+ * Copyright (c) 2015 Harald Kuhn
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.openhab.elements.api.cloud;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,9 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({
-    "sirens_on"
-})
+@JsonPropertyOrder({ "sirens_on" })
 public class Home {
 
     @JsonProperty("sirens_on")
@@ -24,9 +31,9 @@ public class Home {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-     *     The sirensOn
+     *         The sirensOn
      */
     @JsonProperty("sirens_on")
     public Boolean getSirensOn() {
@@ -34,9 +41,9 @@ public class Home {
     }
 
     /**
-     * 
+     *
      * @param sirensOn
-     *     The sirens_on
+     *            The sirens_on
      */
     @JsonProperty("sirens_on")
     public void setSirensOn(Boolean sirensOn) {

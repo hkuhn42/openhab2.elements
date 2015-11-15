@@ -1,5 +1,10 @@
 /**
+ * Copyright (c) 2015 Harald Kuhn
  *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  */
 package org.openhab.elements;
 
@@ -26,11 +31,11 @@ import org.openhab.elements.api.identity.IdentitiyResult;
  *
  * @author hkuhn
  */
-public class ElementsClient2 {
+public class ElementsClient {
 
     private Client client;
 
-    public ElementsClient2() {
+    public ElementsClient() {
         ClientConfig conf = new ClientConfig();
         client = ClientBuilder.newClient(conf);
         client.register(JacksonFeature.class);

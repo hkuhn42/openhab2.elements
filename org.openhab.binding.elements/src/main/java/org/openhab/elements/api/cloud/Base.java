@@ -1,11 +1,20 @@
-
+/**
+ * Copyright (c) 2015 Harald Kuhn
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.openhab.elements.api.cloud;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,20 +24,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({
-    "status",
-    "version",
-    "endnodes",
-    "friendly_name",
-    "latest_version",
-    "fw_outdated",
-    "intrusion_settings",
-    "updates_available",
-    "timezone",
-    "sensors",
-    "firmware_status",
-    "id"
-})
+@JsonPropertyOrder({ "status", "version", "endnodes", "friendly_name", "latest_version", "fw_outdated",
+        "intrusion_settings", "updates_available", "timezone", "sensors", "firmware_status", "id" })
 public class Base {
 
     @JsonProperty("status")
@@ -59,9 +56,9 @@ public class Base {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-     *     The status
+     *         The status
      */
     @JsonProperty("status")
     public String getStatus() {
@@ -69,9 +66,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param status
-     *     The status
+     *            The status
      */
     @JsonProperty("status")
     public void setStatus(String status) {
@@ -79,9 +76,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The version
+     *         The version
      */
     @JsonProperty("version")
     public String getVersion() {
@@ -89,9 +86,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param version
-     *     The version
+     *            The version
      */
     @JsonProperty("version")
     public void setVersion(String version) {
@@ -99,9 +96,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The endnodes
+     *         The endnodes
      */
     @JsonProperty("endnodes")
     public List<Endnode> getEndnodes() {
@@ -109,9 +106,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param endnodes
-     *     The endnodes
+     *            The endnodes
      */
     @JsonProperty("endnodes")
     public void setEndnodes(List<Endnode> endnodes) {
@@ -119,9 +116,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The friendlyName
+     *         The friendlyName
      */
     @JsonProperty("friendly_name")
     public String getFriendlyName() {
@@ -129,9 +126,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param friendlyName
-     *     The friendly_name
+     *            The friendly_name
      */
     @JsonProperty("friendly_name")
     public void setFriendlyName(String friendlyName) {
@@ -139,9 +136,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The latestVersion
+     *         The latestVersion
      */
     @JsonProperty("latest_version")
     public String getLatestVersion() {
@@ -149,9 +146,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param latestVersion
-     *     The latest_version
+     *            The latest_version
      */
     @JsonProperty("latest_version")
     public void setLatestVersion(String latestVersion) {
@@ -159,9 +156,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The fwOutdated
+     *         The fwOutdated
      */
     @JsonProperty("fw_outdated")
     public Boolean getFwOutdated() {
@@ -169,9 +166,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param fwOutdated
-     *     The fw_outdated
+     *            The fw_outdated
      */
     @JsonProperty("fw_outdated")
     public void setFwOutdated(Boolean fwOutdated) {
@@ -179,9 +176,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The intrusionSettings
+     *         The intrusionSettings
      */
     @JsonProperty("intrusion_settings")
     public IntrusionSettings getIntrusionSettings() {
@@ -189,9 +186,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param intrusionSettings
-     *     The intrusion_settings
+     *            The intrusion_settings
      */
     @JsonProperty("intrusion_settings")
     public void setIntrusionSettings(IntrusionSettings intrusionSettings) {
@@ -199,9 +196,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The updatesAvailable
+     *         The updatesAvailable
      */
     @JsonProperty("updates_available")
     public Boolean getUpdatesAvailable() {
@@ -209,9 +206,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param updatesAvailable
-     *     The updates_available
+     *            The updates_available
      */
     @JsonProperty("updates_available")
     public void setUpdatesAvailable(Boolean updatesAvailable) {
@@ -219,9 +216,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The timezone
+     *         The timezone
      */
     @JsonProperty("timezone")
     public String getTimezone() {
@@ -229,9 +226,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param timezone
-     *     The timezone
+     *            The timezone
      */
     @JsonProperty("timezone")
     public void setTimezone(String timezone) {
@@ -239,9 +236,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The sensors
+     *         The sensors
      */
     @JsonProperty("sensors")
     public List<Sensor> getSensors() {
@@ -249,9 +246,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param sensors
-     *     The sensors
+     *            The sensors
      */
     @JsonProperty("sensors")
     public void setSensors(List<Sensor> sensors) {
@@ -259,9 +256,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The firmwareStatus
+     *         The firmwareStatus
      */
     @JsonProperty("firmware_status")
     public String getFirmwareStatus() {
@@ -269,9 +266,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param firmwareStatus
-     *     The firmware_status
+     *            The firmware_status
      */
     @JsonProperty("firmware_status")
     public void setFirmwareStatus(String firmwareStatus) {
@@ -279,9 +276,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @return
-     *     The id
+     *         The id
      */
     @JsonProperty("id")
     public String getId() {
@@ -289,9 +286,9 @@ public class Base {
     }
 
     /**
-     * 
+     *
      * @param id
-     *     The id
+     *            The id
      */
     @JsonProperty("id")
     public void setId(String id) {
