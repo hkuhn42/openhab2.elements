@@ -10,15 +10,13 @@ package org.openhab.elements.api.cloud;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.SerializedName;
 
-@JsonPropertyOrder({ "intrusion_settings" })
 public class BaseConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonProperty("intrusion_settings")
+    @SerializedName("intrusion_settings")
     private IntrusionSettings intrusionSettings;
 
     /**
@@ -26,7 +24,6 @@ public class BaseConfig implements Serializable {
      * @return
      *         The intrusionSettings
      */
-    @JsonProperty("intrusion_settings")
     public IntrusionSettings getIntrusionSettings() {
         return intrusionSettings;
     }
@@ -36,7 +33,6 @@ public class BaseConfig implements Serializable {
      * @param intrusionSettings
      *            The intrusion_settings
      */
-    @JsonProperty("intrusion_settings")
     public void setIntrusionSettings(IntrusionSettings intrusionSettings) {
         this.intrusionSettings = intrusionSettings;
     }

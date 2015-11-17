@@ -9,58 +9,39 @@
 package org.openhab.elements.api.cloud;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Generated;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.SerializedName;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({ "status", "version", "endnodes", "friendly_name", "latest_version", "fw_outdated",
-        "intrusion_settings", "updates_available", "timezone", "sensors", "firmware_status", "id" })
 public class Base {
 
-    @JsonProperty("status")
     private String status;
-    @JsonProperty("version")
     private String version;
-    @JsonProperty("endnodes")
     private List<Endnode> endnodes = new ArrayList<Endnode>();
-    @JsonProperty("friendly_name")
+    @SerializedName("friendly_name")
     private String friendlyName;
-    @JsonProperty("latest_version")
+    @SerializedName("latest_version")
     private String latestVersion;
-    @JsonProperty("fw_outdated")
+    @SerializedName("fw_outdated")
     private Boolean fwOutdated;
-    @JsonProperty("intrusion_settings")
+    @SerializedName("intrusion_settings")
     private IntrusionSettings intrusionSettings;
-    @JsonProperty("updates_available")
+    @SerializedName("updates_available")
     private Boolean updatesAvailable;
-    @JsonProperty("timezone")
     private String timezone;
-    @JsonProperty("sensors")
     private List<Sensor> sensors = new ArrayList<Sensor>();
-    @JsonProperty("firmware_status")
+    @SerializedName("firmware_status")
     private String firmwareStatus;
-    @JsonProperty("id")
     private String id;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      *
      * @return
      *         The status
      */
-    @JsonProperty("status")
     public String getStatus() {
         return status;
     }
@@ -70,7 +51,6 @@ public class Base {
      * @param status
      *            The status
      */
-    @JsonProperty("status")
     public void setStatus(String status) {
         this.status = status;
     }
@@ -80,7 +60,6 @@ public class Base {
      * @return
      *         The version
      */
-    @JsonProperty("version")
     public String getVersion() {
         return version;
     }
@@ -90,7 +69,6 @@ public class Base {
      * @param version
      *            The version
      */
-    @JsonProperty("version")
     public void setVersion(String version) {
         this.version = version;
     }
@@ -100,7 +78,6 @@ public class Base {
      * @return
      *         The endnodes
      */
-    @JsonProperty("endnodes")
     public List<Endnode> getEndnodes() {
         return endnodes;
     }
@@ -110,7 +87,6 @@ public class Base {
      * @param endnodes
      *            The endnodes
      */
-    @JsonProperty("endnodes")
     public void setEndnodes(List<Endnode> endnodes) {
         this.endnodes = endnodes;
     }
@@ -120,7 +96,6 @@ public class Base {
      * @return
      *         The friendlyName
      */
-    @JsonProperty("friendly_name")
     public String getFriendlyName() {
         return friendlyName;
     }
@@ -130,7 +105,6 @@ public class Base {
      * @param friendlyName
      *            The friendly_name
      */
-    @JsonProperty("friendly_name")
     public void setFriendlyName(String friendlyName) {
         this.friendlyName = friendlyName;
     }
@@ -140,7 +114,6 @@ public class Base {
      * @return
      *         The latestVersion
      */
-    @JsonProperty("latest_version")
     public String getLatestVersion() {
         return latestVersion;
     }
@@ -150,7 +123,6 @@ public class Base {
      * @param latestVersion
      *            The latest_version
      */
-    @JsonProperty("latest_version")
     public void setLatestVersion(String latestVersion) {
         this.latestVersion = latestVersion;
     }
@@ -160,7 +132,6 @@ public class Base {
      * @return
      *         The fwOutdated
      */
-    @JsonProperty("fw_outdated")
     public Boolean getFwOutdated() {
         return fwOutdated;
     }
@@ -170,7 +141,6 @@ public class Base {
      * @param fwOutdated
      *            The fw_outdated
      */
-    @JsonProperty("fw_outdated")
     public void setFwOutdated(Boolean fwOutdated) {
         this.fwOutdated = fwOutdated;
     }
@@ -180,7 +150,6 @@ public class Base {
      * @return
      *         The intrusionSettings
      */
-    @JsonProperty("intrusion_settings")
     public IntrusionSettings getIntrusionSettings() {
         return intrusionSettings;
     }
@@ -190,7 +159,6 @@ public class Base {
      * @param intrusionSettings
      *            The intrusion_settings
      */
-    @JsonProperty("intrusion_settings")
     public void setIntrusionSettings(IntrusionSettings intrusionSettings) {
         this.intrusionSettings = intrusionSettings;
     }
@@ -200,7 +168,6 @@ public class Base {
      * @return
      *         The updatesAvailable
      */
-    @JsonProperty("updates_available")
     public Boolean getUpdatesAvailable() {
         return updatesAvailable;
     }
@@ -210,7 +177,6 @@ public class Base {
      * @param updatesAvailable
      *            The updates_available
      */
-    @JsonProperty("updates_available")
     public void setUpdatesAvailable(Boolean updatesAvailable) {
         this.updatesAvailable = updatesAvailable;
     }
@@ -220,7 +186,6 @@ public class Base {
      * @return
      *         The timezone
      */
-    @JsonProperty("timezone")
     public String getTimezone() {
         return timezone;
     }
@@ -230,7 +195,6 @@ public class Base {
      * @param timezone
      *            The timezone
      */
-    @JsonProperty("timezone")
     public void setTimezone(String timezone) {
         this.timezone = timezone;
     }
@@ -240,7 +204,6 @@ public class Base {
      * @return
      *         The sensors
      */
-    @JsonProperty("sensors")
     public List<Sensor> getSensors() {
         return sensors;
     }
@@ -250,7 +213,6 @@ public class Base {
      * @param sensors
      *            The sensors
      */
-    @JsonProperty("sensors")
     public void setSensors(List<Sensor> sensors) {
         this.sensors = sensors;
     }
@@ -260,7 +222,6 @@ public class Base {
      * @return
      *         The firmwareStatus
      */
-    @JsonProperty("firmware_status")
     public String getFirmwareStatus() {
         return firmwareStatus;
     }
@@ -270,7 +231,6 @@ public class Base {
      * @param firmwareStatus
      *            The firmware_status
      */
-    @JsonProperty("firmware_status")
     public void setFirmwareStatus(String firmwareStatus) {
         this.firmwareStatus = firmwareStatus;
     }
@@ -280,7 +240,6 @@ public class Base {
      * @return
      *         The id
      */
-    @JsonProperty("id")
     public String getId() {
         return id;
     }
@@ -290,19 +249,8 @@ public class Base {
      * @param id
      *            The id
      */
-    @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

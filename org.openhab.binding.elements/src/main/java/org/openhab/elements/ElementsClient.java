@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.openhab.elements.api.cloud.Base;
 import org.openhab.elements.api.cloud.BaseConfig;
 import org.openhab.elements.api.cloud.EventResult;
@@ -25,6 +24,8 @@ import org.openhab.elements.api.cloud.IElementsClient;
 import org.openhab.elements.api.cloud.IntrusionSettings;
 import org.openhab.elements.api.identity.IElementsIdentity;
 import org.openhab.elements.api.identity.IdentitiyResult;
+
+import com.eclipsesource.jaxrs.provider.gson.GsonProvider;
 
 /**
  * Cloud Client wrapper
@@ -35,10 +36,16 @@ public class ElementsClient {
 
     private Client client;
 
+    // public ElementsClient() {
+    // ClientConfig conf = new ClientConfig();
+    // client = ClientBuilder.newClient(conf);
+    // client.register(JacksonFeature.class);
+    // }
+
     public ElementsClient() {
         ClientConfig conf = new ClientConfig();
         client = ClientBuilder.newClient(conf);
-        client.register(JacksonFeature.class);
+        client.register(new GsonProvider<Object>());
     }
 
     public Client getServiceClient() {

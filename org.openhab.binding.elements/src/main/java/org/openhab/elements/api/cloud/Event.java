@@ -8,52 +8,27 @@
  */
 package org.openhab.elements.api.cloud;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({ "source_type", "state", "source_name", "source_id", "type", "ts", "o", "id", "parents" })
 public class Event {
 
-    @JsonProperty("source_type")
+    @SerializedName("source_type")
     private String sourceType;
-    @JsonProperty("state")
     private String state;
-    @JsonProperty("source_name")
+    @SerializedName("source_name")
     private String sourceName;
-    @JsonProperty("source_id")
+    @SerializedName("source_id")
     private String sourceId;
-    @JsonProperty("type")
     private String type;
-    @JsonProperty("ts")
     private Long ts;
-    @JsonProperty("o")
     private Origin o;
-    @JsonProperty("id")
     private String id;
-    @JsonProperty("parents")
-    private List<String> parents = new ArrayList<String>();
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      *
      * @return
      *         The sourceType
      */
-    @JsonProperty("source_type")
     public String getSourceType() {
         return sourceType;
     }
@@ -63,7 +38,6 @@ public class Event {
      * @param sourceType
      *            The source_type
      */
-    @JsonProperty("source_type")
     public void setSourceType(String sourceType) {
         this.sourceType = sourceType;
     }
@@ -73,7 +47,6 @@ public class Event {
      * @return
      *         The state
      */
-    @JsonProperty("state")
     public String getState() {
         return state;
     }
@@ -83,7 +56,6 @@ public class Event {
      * @param state
      *            The state
      */
-    @JsonProperty("state")
     public void setState(String state) {
         this.state = state;
     }
@@ -93,7 +65,7 @@ public class Event {
      * @return
      *         The sourceName
      */
-    @JsonProperty("source_name")
+
     public String getSourceName() {
         return sourceName;
     }
@@ -103,7 +75,6 @@ public class Event {
      * @param sourceName
      *            The source_name
      */
-    @JsonProperty("source_name")
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
     }
@@ -113,7 +84,6 @@ public class Event {
      * @return
      *         The sourceId
      */
-    @JsonProperty("source_id")
     public String getSourceId() {
         return sourceId;
     }
@@ -123,7 +93,6 @@ public class Event {
      * @param sourceId
      *            The source_id
      */
-    @JsonProperty("source_id")
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
     }
@@ -133,7 +102,6 @@ public class Event {
      * @return
      *         The type
      */
-    @JsonProperty("type")
     public String getType() {
         return type;
     }
@@ -143,7 +111,6 @@ public class Event {
      * @param type
      *            The type
      */
-    @JsonProperty("type")
     public void setType(String type) {
         this.type = type;
     }
@@ -153,7 +120,6 @@ public class Event {
      * @return
      *         The ts
      */
-    @JsonProperty("ts")
     public Long getTs() {
         return ts;
     }
@@ -163,7 +129,6 @@ public class Event {
      * @param ts
      *            The ts
      */
-    @JsonProperty("ts")
     public void setTs(Long ts) {
         this.ts = ts;
     }
@@ -173,7 +138,6 @@ public class Event {
      * @return
      *         The o
      */
-    @JsonProperty("o")
     public Origin getO() {
         return o;
     }
@@ -183,7 +147,6 @@ public class Event {
      * @param o
      *            The o
      */
-    @JsonProperty("o")
     public void setO(Origin o) {
         this.o = o;
     }
@@ -193,7 +156,6 @@ public class Event {
      * @return
      *         The id
      */
-    @JsonProperty("id")
     public String getId() {
         return id;
     }
@@ -203,39 +165,7 @@ public class Event {
      * @param id
      *            The id
      */
-    @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
     }
-
-    /**
-     *
-     * @return
-     *         The parents
-     */
-    @JsonProperty("parents")
-    public List<String> getParents() {
-        return parents;
-    }
-
-    /**
-     *
-     * @param parents
-     *            The parents
-     */
-    @JsonProperty("parents")
-    public void setParents(List<String> parents) {
-        this.parents = parents;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }
