@@ -9,9 +9,10 @@
 package org.openhab.elements.api.base;
 
 /**
- * @author hkuhn
+ * For future use
  *
+ * @author hkuhn
  */
-public interface IElementsBase {
+public interface IElementsBaseApi {
 
 }

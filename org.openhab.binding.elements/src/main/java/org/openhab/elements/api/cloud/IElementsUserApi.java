@@ -19,12 +19,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
- * private static final String url02 = "https://api.gigaset-elements.de";
+ * Encapsulates the user api (for webapp and )
  *
  * @author hkuhn
  *
  */
-public interface IElementsClient {
+public interface IElementsUserApi {
 
     public static final String CLOUD_URL = "https://api.gigaset-elements.de";
 
@@ -36,24 +36,25 @@ public interface IElementsClient {
     public Response connect(@QueryParam("op") String op, @CookieParam("reefssid") String reefssid);
 
     /**
+     * List all basestations
      *
-     *
-     * @return
+     * @return array of Base
      */
     @GET
     @Path("/api/v1/me/basestations")
     public Base[] getBase(@CookieParam("usertoken") String usertoken);
 
     /**
+     * Fetching events
      *
-     * @return
+     * @return EventResult object
      */
     @GET
     @Path("/api/v1/me/events")
     public EventResult getEvents(@QueryParam("limit") Integer limit, @CookieParam("usertoken") String usertoken);
 
     /**
-     *
+     * Sets the basestation intrusion mode
      *
      * @return
      */

@@ -20,9 +20,9 @@ import org.glassfish.jersey.client.proxy.WebResourceFactory;
 import org.openhab.elements.api.cloud.Base;
 import org.openhab.elements.api.cloud.BaseConfig;
 import org.openhab.elements.api.cloud.EventResult;
-import org.openhab.elements.api.cloud.IElementsClient;
+import org.openhab.elements.api.cloud.IElementsUserApi;
 import org.openhab.elements.api.cloud.IntrusionSettings;
-import org.openhab.elements.api.identity.IElementsIdentity;
+import org.openhab.elements.api.identity.IElementsIdentityApi;
 import org.openhab.elements.api.identity.IdentitiyResult;
 
 import com.eclipsesource.jaxrs.provider.gson.GsonProvider;
@@ -67,18 +67,18 @@ public class ElementsClient {
 
     public IdentitiyResult getIdString(String email, String passwd) throws Exception {
 
-        WebTarget target = client.target(IElementsIdentity.CLOUD_URL);
+        WebTarget target = client.target(IElementsIdentityApi.CLOUD_URL);
 
-        IElementsIdentity elementsCloud = WebResourceFactory.newResource(IElementsIdentity.class, target);
+        IElementsIdentityApi elementsCloud = WebResourceFactory.newResource(IElementsIdentityApi.class, target);
 
         return elementsCloud.login(email, passwd);
     }
 
     public String getUserToken(String reefssid) throws Exception {
-        WebTarget target = client.target(IElementsClient.CLOUD_URL);
+        WebTarget target = client.target(IElementsUserApi.CLOUD_URL);
 
         // create a new client proxy for the BooksResource
-        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
+        IElementsUserApi elementsCloud = WebResourceFactory.newResource(IElementsUserApi.class, target);
 
         Response response = elementsCloud.connect("gigaset", reefssid);
         Cookie usercookie = response.getCookies().get("usertoken");
@@ -93,15 +93,15 @@ public class ElementsClient {
      * @throws NotAuthorizedException
      */
     public Base[] getBase(String usertoken) throws NotAuthorizedException {
-        WebTarget target = client.target(IElementsClient.CLOUD_URL);
-        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
+        WebTarget target = client.target(IElementsUserApi.CLOUD_URL);
+        IElementsUserApi elementsCloud = WebResourceFactory.newResource(IElementsUserApi.class, target);
 
         return elementsCloud.getBase(usertoken);
     }
 
     public void setMode(String baseId, String mode, String usertoken) {
-        WebTarget target = client.target(IElementsClient.CLOUD_URL);
-        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
+        WebTarget target = client.target(IElementsUserApi.CLOUD_URL);
+        IElementsUserApi elementsCloud = WebResourceFactory.newResource(IElementsUserApi.class, target);
         IntrusionSettings settings = new IntrusionSettings();
         settings.setActiveMode(mode.toLowerCase());
 
@@ -112,8 +112,8 @@ public class ElementsClient {
     }
 
     public EventResult getEvents(String usertoken) {
-        WebTarget target = client.target(IElementsClient.CLOUD_URL);
-        IElementsClient elementsCloud = WebResourceFactory.newResource(IElementsClient.class, target);
+        WebTarget target = client.target(IElementsUserApi.CLOUD_URL);
+        IElementsUserApi elementsCloud = WebResourceFactory.newResource(IElementsUserApi.class, target);
 
         return elementsCloud.getEvents(5, usertoken);
     }
