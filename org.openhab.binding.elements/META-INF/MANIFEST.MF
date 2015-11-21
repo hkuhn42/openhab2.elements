@@ -13,11 +13,12 @@ Import-Package: org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.thing,
  org.eclipse.smarthome.core.thing.binding,
  org.eclipse.smarthome.core.types,
+ com.google.gson;version="2.3.1",
+ com.google.gson.annotations;version="2.3.1",
+ com.eclipsesource.jaxrs.provider.gson;version="2.3.0",
  org.osgi.framework;version="1.8.0",
  org.slf4j
 Service-Component: OSGI-INF/*
 Export-Package: org.openhab.binding.elements,
  org.openhab.binding.elements.handler
-Require-Bundle: com.eclipsesource.jaxrs.provider.gson;bundle-version="2.3.0",
- com.google.gson;bundle-version="2.3.1",
- com.eclipsesource.jaxrs.jersey-all;bundle-version="2.18.0"
+Require-Bundle: com.eclipsesource.jaxrs.jersey-all;bundle-version="2.18.0"
