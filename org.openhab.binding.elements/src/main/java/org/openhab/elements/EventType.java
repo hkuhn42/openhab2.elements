@@ -21,7 +21,13 @@ public enum EventType {
     OPEN("open"),
     CLOSE("close"),
     HOMECOMING("homecoming"),
-    OTHER("unknown");
+
+    SENSOR_OFFLINE("sensor_offline_notification"),
+    BASE_OFFLINE("bs_offline_notification"),
+
+    OTHER("unknown"),
+
+    ;
 
     private final String key;
     private static final Map<String, EventType> stringToEnum = new HashMap<String, EventType>();
@@ -30,7 +36,7 @@ public enum EventType {
         this.key = key;
     }
 
-    static { // Initialisiert eine Map, die das Mapping von key auf Enum enthaelt
+    static {
         for (EventType type : values()) {
             stringToEnum.put(type.toString(), type);
         }
@@ -43,7 +49,7 @@ public enum EventType {
 
     public static EventType fromString(String key) {
         if (key != null) {
-            if (stringToEnum.get(key) != null) { // returns ProcStatus for key or null
+            if (stringToEnum.get(key) != null) { // returns EventType for key or null
                 return stringToEnum.get(key);
             }
             return OTHER;
